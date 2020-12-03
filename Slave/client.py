@@ -106,7 +106,6 @@ def main():
         
     
     def cmd():
-        global s
         while True:
             try:
                 data = s.recv(13107200)
