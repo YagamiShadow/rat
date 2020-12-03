@@ -29,7 +29,7 @@ host = "192.168.0.14"
 s = socket.socket()
 print("[+] Server: ", host, " Port: ", port)
 
-""""Connect to the server""""
+"""Connect to the server"""
 while True:
     try:
         s.connect((host, port))
