@@ -128,7 +128,6 @@ def main():
         try:
             """Receive and execute commands"""
             
-            Receive commnand
             command = s.recv(1024)
             command = command.decode()
 
