@@ -1,7 +1,5 @@
-os
-socket
-base64
-random
-datetime
-geolocate
-pyautogui
+PyAutoGUI==0.9.52
+geocoder==1.38.1
+requests==2.25.0
+geocoder==1.38.1
+DateTime==4.3
