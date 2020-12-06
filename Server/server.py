@@ -55,40 +55,9 @@ def main():
     while True:
         
         command = str(input(name))
-
-        #try:
-        if command == "pwd":
-            pwd(conn,command)
-
-        if command == "custom_dir":
-            custom_dir(conn,command)
-
-        if command == "download_file":
-            download_file(conn,command)
-
-        if command == "remove_file":
-            remove_file(conn,command)
-
-        if command == "send_file":
-            send_file(conn,command)
-
-        if command == "screenshot":
-            screenshot(conn,command)
-
-        if command == "geolocate":
-            geolocate(conn,command)
-
-        if command == "download_url":
-            download_url(conn,command)
-
-        if command == "cmd":
-            cmd(conn,command)                
-
-        if command == "help":
-            get_help()
         
-        if command == "get_admin":
-            get_admin(conn,command)
+        #try:
+        check_command(conn,command)
 
         #except Exception as error_msg:
         #    error(error_msg)

