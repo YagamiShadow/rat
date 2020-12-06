@@ -13,6 +13,11 @@ import random
 import datetime
 import time
 from functions import *
+import threading
+import sys
+from queue import Queue
+import struct
+import signal
 
 #Welcome
 print("[+] Welcome to Lukas Alstrup's Remote Access tool")
@@ -46,7 +51,9 @@ username = conn.recv(10000000)
 
 name = str(str(username.decode()) + "@" + str(addr[0])+ " :~# ")
     
-    
+
+
+
 while True:
     
     command = str(input(name))
