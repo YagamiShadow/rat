@@ -50,17 +50,10 @@ print("")
 username = conn.recv(10000000)
 
 name = str(str(username.decode()) + "@" + str(addr[0])+ " :~# ")
+
+while True:
     
-
-NUMBER_OF_THREADS = 2
-JOB_NUMBER = [1, 2]
-queue = Queue()
+    command = str(input(name))
+    check_command(conn,command)
 
 
-
-
-class MultiServer(object):
-    while True:
-        
-        command = str(input(name))
-        check_command(conn,command)
