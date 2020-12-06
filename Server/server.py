@@ -36,7 +36,7 @@ print("[+] The listener has been started...")
 print("[+] LHOST = ", host)
 print("[+] LPORT = ", port)
 print("[+] Waiting for incomming connections")
-s.listen(1) #Change 1 for multiple connections
+s.listen(1)
 conn, addr = s.accept()
 
 print("[+] ", addr, "has connected to the server successfully")
