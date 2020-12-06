@@ -75,22 +75,8 @@ class Client(object):
             raise
         return
 
-    def print_output(self, output_str):
-        """ Prints command output """
-        sent_message = str.encode(output_str + str(os.getcwd()) + '> ')
-        self.socket.send(struct.pack('>I', len(sent_message)) + sent_message)
-        print(output_str)
-        return
-
     def receive_commands(self):
         """ Receive commands from remote server and run on local machine """
-        try:
-            self.socket.recv(10)
-        except Exception as e:
-            print('Could not start communication with server: %s\n' %str(e))
-            return
-        cwd = str.encode(str(os.getcwd()) + '> ')                                  ##LUKAS_ALSTRUP
-        self.socket.send(struct.pack('>I', len(cwd)) + cwd)
         while True:
             command = s.recv(1024)
             command = command.decode()
