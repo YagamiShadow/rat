@@ -40,6 +40,9 @@ def check_command(conn,command):
     if command == "get_admin":
         get_admin(conn,command)
 
+def error(error_msg):
+    print("[-] There was an unexpected error. Here is the error message: ", error_msg)
+
 def pwd(conn,command):
     conn.send(command.encode())
     print("[+] Command has been sent. Waiting for execution...")

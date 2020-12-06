@@ -45,19 +45,9 @@ print("")
 username = conn.recv(10000000)
 
 name = str(str(username.decode()) + "@" + str(addr[0])+ " :~# ")
-
-
-def error(error_msg):
-    print("[-] There was an unexpected error. Here is the error message: ", error_msg)
     
     
 while True:
     
     command = str(input(name))
-    
-    #try:
     check_command(conn,command)
-
-    #except Exception as error_msg:
-    #    error(error_msg)
-    
