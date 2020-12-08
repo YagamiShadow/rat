@@ -44,7 +44,6 @@ addresses = []
 
 def listen():
     while True:
-        # Accept Connection
         client, address = server.accept()
         clients.append(client)
         addresses.append(address)
@@ -76,7 +75,7 @@ def control():
                 command = input(name.decode() + "@" + str(ip[0]) + " :~# ")
                 check_command(conn=conn,command=command)
         else:
-            print("Unkown command : Check your syntax plesase")
+            print("Unkown command : Check your syntax please")
         
 
 

