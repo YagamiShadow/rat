@@ -42,9 +42,7 @@ def check_command(conn,command):
     
 
 
-def get_input(information):
-    answer = input(information)
-    return answer
+
 
 def error(error_msg):
     print("[-] There was an unexpected error. Here is the error message: ", error_msg)
