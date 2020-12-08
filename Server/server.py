@@ -65,14 +65,13 @@ def control():
 
         elif control_command[0:7] == "connect":
             clientID = int(input("Client ID: "))
+            
             conn = clients[clientID]
-
             ip = addresses[clientID]
             name = names[clientID]
-            name.decode()
             while True:
                 #username.decode()) + "@" + str(addr[0])+ " :~# "
-                command = input(name.decode() + "@" + str(ip[0]) + " :~# ")
+                command = input(name + "@" + str(ip[0]) + " :~# ")
                 if command == "quit":
                     #Shut down the socket
                     conn.send("SHUTDOWN".encode())
