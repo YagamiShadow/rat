@@ -12,6 +12,7 @@ import signal
 import struct
 
 def check_command(s,command):
+    
     if command == "pwd":
         pwd(s)
 

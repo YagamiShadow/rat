@@ -39,6 +39,7 @@ def check_command(conn,command):
     
     if command == "get_admin":
         get_admin(conn,command)
+    
 
 
 def get_input(information):
@@ -51,7 +52,7 @@ def error(error_msg):
 def pwd(conn,command):
     conn.send(command.encode())
     print("[+] Command has been sent. Waiting for execution...")
-    files = conn.recv(5000) #bytes
+    files = conn.recv(5000)
     files = files.decode()
     print("[+] Command output: ", files)
 

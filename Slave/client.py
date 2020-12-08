@@ -48,7 +48,15 @@ def execute_commands(s):
         try:
             command = s.recv(1024)
             command = command.decode()
-            check_command(s,command)
+            if command == "SHUTDOWN":
+                print("SHUTDOWN AND RECONNECT")
+                s.close()
+                s = ""
+                connect(s)
+            else:
+                check_command(s,command)
+            
+            
         except Exception as error_msg:
             print("Error: " + str(error_msg))
             # reconnect to the server
