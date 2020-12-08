@@ -75,6 +75,8 @@ def control():
                 #username.decode()) + "@" + str(addr[0])+ " :~# "
                 command = input(name.decode() + "@" + str(ip[0]) + " :~# ")
                 check_command(conn=conn,command=command)
+        else:
+            print("Unkown command : Check your syntax plesase")
         
 
 
